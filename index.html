@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090d18">
+<title>Clipora | استوديو الفيديو الذكي</title>
+<style>
+:root {
+  --bg:#090d18;
+  --panel:#111a2c;
+  --line:#27334a;
+  --text:#f5f7ff;
+  --muted:#9baac3;
+  --green:#66f0c0;
+  --blue:#839dff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family:system-ui,Arial,sans-serif;
+  background:radial-gradient(ellipse at top,#1b2c4c 0%,var(--bg) 55%);
+  color:var(--text);
+  min-height:100vh;
+}
+button,input,select { font:inherit; }
+button { cursor:pointer; }
+.container { max-width:1100px; margin:auto; padding:20px; }
+header {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:12px 0 24px; border-bottom:1px solid var(--line);
+}
+.brand { display:flex; align-items:center; gap:12px; font-size:22px; font-weight:900; }
+.logo {
+  display:grid; place-items:center; width:46px; height:46px;
+  border-radius:15px; color:#07131b;
+  background:linear-gradient(135deg,var(--green),var(--blue));
+  font-size:24px;
+}
+.brand small { display:block; color:var(--muted); font-size:10px; letter-spacing:2px; }
+.pill { border:1px solid #315c58; color:var(--green); padding:8px 12px; border-radius:30px; font-size:12px; }
+.hero { padding:45px 0 32px; text-align:center; }
+.eyebrow { color:var(--green); font-size:13px; font-weight:700; }
+h1 { font-size:clamp(34px,7vw,60px); line-height:1.2; margin:15px 0; letter-spacing:-1.5px; }
+h1 span { background:linear-gradient(90deg,var(--green),var(--blue)); color:transparent; background-clip:text; }
+.hero p { max-width:620px; margin:0 auto; color:var(--muted); line-height:1.9; }
+.btn {
+  border:0; border-radius:12px; padding:13px 18px; font-weight:800;
+  transition:.2s;
+}
+.btn:hover { transform:translateY(-2px); }
+.primary { background:linear-gradient(100deg,var(--green),#a2f8d8); color:#08131c; }
+.secondary { color:var(--text); background:#ffffff0b; border:1px solid var(--line); }
+.hero .btn { margin:22px 5px 0; }
+.layout { display:grid; grid-template-columns:1.1fr .9fr; gap:18px; }
+.card {
+  background:linear-gradient(145deg,#141f34,#0f1728);
+  border:1px solid var(--line); border-radius:20px; padding:22px;
+  box-shadow:0 18px 45px #0002; min-width:0;
+}
+.card h2 { font-size:17px; margin:0 0 18px; }
+.label { display:block; font-size:13px; font-weight:700; margin:18px 0 8px; }
+.upload {
+  border:1.5px dashed #4b6383; border-radius:17px; padding:28px 12px;
+  text-align:center; background:#ffffff04;
+}
+.upload .symbol { font-size:38px; color:var(--green); }
+.upload p { color:var(--muted); font-size:12px; line-height:1.8; }
+input[type=file] { display:none; }
+select,input[type=text] {
+  width:100%; padding:12px; border-radius:10px;
+  color:var(--text); background:#0a1221; border:1px solid var(--line);
+}
+select option { background:#111a2c; }
+.preview {
+  background:#070b13; border:1px solid var(--line); border-radius:14px;
+  margin-top:15px; min-height:180px; display:grid; place-items:center;
+  overflow:hidden;
+}
+.preview video { width:100%; max-height:440px; display:block; }
+.placeholder { text-align:center; color:var(--muted); font-size:13px; padding:30px; }
+.placeholder strong { display:block; font-size:34px; color:#526886; margin-bottom:8px; }
+.file-info { color:var(--muted); font-size:12px; margin-top:12px; overflow-wrap:anywhere; }
+.choices { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.choice {
+  border:1px solid var(--line); padding:13px 5px; border-radius:11px;
+  text-align:center; color:var(--muted); font-size:12px;
+}
+.choice:has(input:checked) { border-color:var(--green); color:var(--green); background:#66f0c010; }
+.choice input { display:block; margin:0 auto 7px; accent-color:var(--green); }
+input[type=range] { width:100%; accent-color:var(--green); }
+.check { display:flex; align-items:center; gap:9px; color:var(--muted); font-size:12px; margin-top:16px; }
+.check input { accent-color:var(--green); }
+.actions { display:flex; gap:10px; margin-top:22px; }
+.actions button { flex:1; }
+.result {
+  margin-top:16px; padding:15px; border:1px solid #315c58;
+  background:#66f0c00c; color:#c9fbe9; border-radius:12px;
+  line-height:2; font-size:13px; overflow-wrap:anywhere;
+}
+.features { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:25px 0 45px; }
+.feature { background:#ffffff04; border:1px solid var(--line); padding:18px; border-radius:15px; }
+.feature b { display:block; margin-bottom:8px; }
+.feature p { color:var(--muted); font-size:12px; line-height:1.8; margin:0; }
+footer { border-top:1px solid var(--line); padding:22px 0; color:var(--muted); font-size:12px; text-align:center; }
+@media(max-width:760px) {
+  .container { padding:14px; }
+  .layout { grid-template-columns:1fr; }
+  .features { grid-template-columns:1fr; }
+  .hero { padding-top:35px; }
+  .card { padding:17px; }
+  .pill { display:none; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="brand">
+    <div class="logo">▶</div>
+    <div>Clipora<small>SMART VIDEO STUDIO</small></div>
+  </div>
+  <span class="pill">● الاستوديو التجريبي</span>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">✦ أدوات صناعة المحتوى في مكان واحد</div>
+  <h1>اجعل كل مقطع<br><span>قصة تستحق المشاهدة.</span></h1>
+  <p>ارفع الفيديو، عاينه، واختر إعداداتك لتجهيز محتوى عمودي يناسب TikTok وReels وYouTube Shorts.</p>
+  <button class="btn primary" onclick="document.getElementById('videoFile').click()">＋ اختر فيديوك</button>
+  <button class="btn secondary" onclick="document.getElementById('studio').scrollIntoView({behavior:'smooth'})">استكشف الاستوديو ↓</button>
+</section>
+
+<div class="layout" id="studio">
+  <section class="card">
+    <h2>🎬 الفيديو الخاص بك</h2>
+    <div class="upload">
+      <div class="symbol">⇧</div>
+      <strong>ابدأ برفع مقطعك</strong>
+      <p>اختر فيديو من هاتفك أو حاسوبك لمعاينته هنا.</p>
+      <button class="btn primary" onclick="document.getElementById('videoFile').click()">اختيار الفيديو</button>
+      <input id="videoFile" type="file" accept="video/*">
+    </div>
+    <div class="preview" id="preview">
+      <div class="placeholder"><strong>▷</strong>ستظهر معاينة الفيديو هنا</div>
+    </div>
+    <div class="file-info" id="fileInfo">لم يتم اختيار أي ملف بعد.</div>
+  </section>
+
+  <section class="card">
+    <h2>⚙️ إعدادات المقطع</h2>
+
+    <label class="label" for="platform">منصة النشر</label>
+    <select id="platform">
+      <option>TikTok</option>
+      <option>YouTube Shorts</option>
+      <option>Instagram Reels</option>
+      <option>جميع المنصات</option>
+    </select>
+
+    <label class="label">أبعاد الفيديو</label>
+    <div class="choices">
+      <label class="choice"><input type="radio" name="ratio" value="9:16" checked>9:16 عمودي</label>
+      <label class="choice"><input type="radio" name="ratio" value="1:1">1:1 مربع</label>
+      <label class="choice"><input type="radio" name="ratio" value="16:9">16:9 أفقي</label>
+    </div>
+
+    <label class="label" for="quality">الجودة المستهدفة</label>
+    <select id="quality">
+      <option>1080p — Full HD</option>
+      <option>720p — HD</option>
+      <option>480p — حجم صغير</option>
+    </select>
+
+    <label class="label" for="caption">نمط الترجمة المقترح</label>
+    <select id="caption">
+      <option>ترجمة واضحة وبسيطة</option>
+      <option>كلمات بارزة وجذابة</option>
+      <option>نمط سينمائي</option>
+      <option>بدون ترجمة</option>
+    </select>
+
+    <label class="label" for="duration">مدة المقطع المستهدفة</label>
+    <select id="duration">
+      <option>15 ثانية</option>
+      <option selected>30 ثانية</option>
+      <option>45 ثانية</option>
+      <option>60 ثانية</option>
+    </select>
+
+    <label class="check"><input type="checkbox" id="music"> أريد إضافة موسيقى لاحقًا</label>
+    <label class="check"><input type="checkbox" id="subtitles" checked> أريد إضافة ترجمة تلقائية لاحقًا</label>
+
+    <div class="actions">
+      <button class="btn primary" id="prepare">✦ تجهيز الإعدادات</button>
+      <button class="btn secondary" id="reset">إعادة ضبط</button>
+    </div>
+    <div class="result" id="result" hidden></div>
+    <p style="color:var(--muted);font-size:11px;line-height:1.8;margin-top:16px">
+      هذه النسخة توفر واجهة ومعاينة محلية للفيديو وملخص الإعدادات. القص الفعلي والترجمة والموسيقى وتصدير فيديو جديد تحتاج إلى تطوير إضافي.
+    </p>
+  </section>
+</div>
+
+<section class="features">
+  <article class="feature"><b>✦ واجهة أنيقة</b><p>تصميم داكن عصري، بألوان مريحة وتجربة واضحة على الهاتف.</p></article>
+  <article class="feature"><b>▶ معاينة الفيديو</b><p>شاهد مقطعك في المتصفح قبل تجهيز خياراتك.</p></article>
+  <article class="feature"><b>↗ جاهز للتطوير</b><p>يمكن إضافة أدوات المونتاج الآلي والتصدير في المراحل القادمة.</p></article>
+</section>
+
+<footer>© 2026 Clipora Studio — مساحة إبداعك تبدأ هنا</footer>
+</div>
+
+<script>
+const input = document.getElementById('videoFile');
+const preview = document.getElementById('preview');
+const info = document.getElementById('fileInfo');
+const result = document.getElementById('result');
+let videoUrl = null;
+let selectedFile = null;
+
+input.addEventListener('change', function() {
+  const file = this.files && this.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('video/')) {
+    alert('يرجى اختيار ملف فيديو صالح.');
+    return;
+  }
+  if (videoUrl) URL.revokeObjectURL(videoUrl);
+  selectedFile = file;
+  videoUrl = URL.createObjectURL(file);
+
+  const video = document.createElement('video');
+  video.src = videoUrl;
+  video.controls = true;
+  video.playsInline = true;
+  video.preload = 'metadata';
+
+  preview.replaceChildren(video);
+  info.textContent = 'الملف: ' + file.name + ' • الحجم: ' +
+    (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+  result.hidden = true;
+});
+
+document.getElementById('prepare').addEventListener('click', function() {
+  if (!selectedFile) {
+    alert('اختر فيديو أولاً.');
+    input.click();
+    return;
+  }
+
+  const ratio = document.querySelector('input[name="ratio"]:checked').value;
+  const platform = document.getElementById('platform').value;
+  const quality = document.getElementById('quality').value;
+  const caption = document.getElementById('caption').value;
+  const duration = document.getElementById('duration').value;
+  const music = document.getElementById('music').checked ? 'نعم' : 'لا';
+  const subtitles = document.getElementById('subtitles').checked ? 'نعم' : 'لا';
+
+  result.textContent =
+    'تم تجهيز ملخص إعداداتك بنجاح. ' +
+    'الملف: ' + selectedFile.name +
+    ' | المنصة: ' + platform +
+    ' | الأبعاد: ' + ratio +
+    ' | الجودة: ' + quality +
+    ' | المدة المستهدفة: ' + duration +
+    ' | نمط الترجمة: ' + caption +
+    ' | موسيقى لاحقًا: ' + music +
+    ' | ترجمة تلقائية لاحقًا: ' + subtitles +
+    '. ملاحظة: لم يتم تعديل ملف الفيديو أو تصدير نسخة جديدة.';
+  result.hidden = false;
+});
+
+document.getElementById('reset').addEventListener('click', function() {
+  input.value = '';
+  selectedFile = null;
+  if (videoUrl) URL.revokeObjectURL(videoUrl);
+  videoUrl = null;
+  preview.innerHTML = '<div class="placeholder"><strong>▷</strong>ستظهر معاينة الفيديو هنا</div>';
+  info.textContent = 'لم يتم اختيار أي ملف بعد.';
+  result.hidden = true;
+  document.querySelector('input[name="ratio"][value="9:16"]').checked = true;
+  document.getElementById('platform').selectedIndex = 0;
+  document.getElementById('quality').selectedIndex = 0;
+  document.getElementById('caption').selectedIndex = 0;
+  document.getElementById('duration').selectedIndex = 1;
+  document.getElementById('music').checked = false;
+  document.getElementById('subtitles').checked = true;
+});
+</script>
+</body>
+</html>
